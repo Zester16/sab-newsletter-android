@@ -37,7 +37,7 @@ fun DashboardView(context: Context, navController: NavHostController, viewModel:
 
         }
         Button(onClick ={viewModel.getNewsLetters()} ){
-
+            Text("Refresh")
         }
         if(!newsLetters.isNullOrEmpty()){
             NewsLetterList(newsletersDomain = newsLetters!!,navController)

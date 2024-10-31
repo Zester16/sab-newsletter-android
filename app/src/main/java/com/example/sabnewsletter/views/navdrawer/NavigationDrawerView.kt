@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -27,7 +28,10 @@ import androidx.compose.material3.rememberDrawerState
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,20 +48,24 @@ import com.example.sabnewsletter.R
 import com.example.sabnewsletter.navigation.NavGraph
 import com.example.sabnewsletter.navigation.NavigationConstant
 import com.example.sabnewsletter.views.dashboard.DashboardView
+import com.example.sabnewsletter.views.usernavigation.UserNavigationBottomSheet
 
 
 import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NavigationDrawerApp(context: Context,navController: NavHostController) {
+fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmodel:NavigationDrawerViewModel=NavigationDrawerViewModel()) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
                 //Text("Drawer title", modifier = Modifier.padding(16.dp))
                 val sabencosIcon = painterResource(id = R.drawable.ic_launcher_round)
-                Image(painter = sabencosIcon, contentDescription = "sabencos logo", modifier =Modifier.width(90.dp).height(90.dp), alignment = Alignment.Center)
+                Image(painter = sabencosIcon, contentDescription = "sabencos logo", modifier = Modifier
+                    .width(90.dp)
+                    .height(90.dp), alignment = Alignment.Center)
                 NavigationDrawerItem(
                     label = { Text(text = "Drawer Item") },
                     selected = false,
@@ -95,11 +103,15 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController) {
                                 contentDescription = "Menu"
                             )
                         }
-
-
+                    },
+                    actions = {
+                        IconButton(onClick = { viewmodel.showBottomSheet()}) {
+                            Icon(
+                                imageVector = Icons.Filled.Person,
+                                contentDescription = "Localized description"
+                            )
+                        }
                     }
-
-
 
                     )
             },
@@ -110,7 +122,7 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController) {
 
             ) {
                 NavGraph(context=context,navController = navController)
-
+                UserNavigationBottomSheet(viewmodel )
             }
         }
     }
