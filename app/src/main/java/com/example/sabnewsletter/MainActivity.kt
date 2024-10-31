@@ -29,6 +29,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.sabnewsletter.navigation.NavGraph
 import com.example.sabnewsletter.navigation.NavigationConstant
 import com.example.sabnewsletter.ui.theme.SabNewsLetterTheme
+import com.example.sabnewsletter.views.navdrawer.NavigationDrawerApp
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -47,37 +48,8 @@ class MainActivity : ComponentActivity() {
 //                    NavGraph(context=context,navController = navController)
 //
 //                }
-                Scaffold(
-                    topBar = {
-                        val navBackStackEntry by navController.currentBackStackEntryAsState()
-                        val currentRoute =
-                            navBackStackEntry?.destination?.route
 
-                        //to hide bottomNavBar
-                        val skipNav = listOf(NavigationConstant.SPLASH,NavigationConstant.LOGIN)
-                        if (currentRoute in skipNav) return@Scaffold
-
-                        TopAppBar(
-                            colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                                titleContentColor = MaterialTheme.colorScheme.primary,
-                            ),
-                            title = {
-                                //Text("Sabencos News Letter")
-                            }
-
-                        )
-                    },
-                ){innerPadding->
-                    Surface(modifier = Modifier.padding(innerPadding)
-                        .fillMaxSize(), color = Color.White
-
-                    ) {
-                        NavGraph(context=context,navController = navController)
-
-                    }
-                }
-
+                NavigationDrawerApp(context, navController = navController)
             }
 
             }
