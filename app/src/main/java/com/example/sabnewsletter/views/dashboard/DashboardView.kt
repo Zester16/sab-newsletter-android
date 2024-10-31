@@ -32,10 +32,7 @@ fun DashboardView(context: Context, navController: NavHostController, viewModel:
     val newsLetters by viewModel.newsletterList.observeAsState(emptyList<SabencosNewsletersDomain>())
     Column {
         Text(text = "This is Dashboard")
-        Button(onClick = {authenticationRepository.logOutUser() }) {
-            Text("Logout")
 
-        }
         Button(onClick ={viewModel.getNewsLetters()} ){
             Text("Refresh")
         }

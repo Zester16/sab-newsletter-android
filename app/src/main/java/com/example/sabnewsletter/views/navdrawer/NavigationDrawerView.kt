@@ -47,6 +47,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.sabnewsletter.R
 import com.example.sabnewsletter.navigation.NavGraph
 import com.example.sabnewsletter.navigation.NavigationConstant
+import com.example.sabnewsletter.repository.AuthenticationRepository
 import com.example.sabnewsletter.views.dashboard.DashboardView
 import com.example.sabnewsletter.views.usernavigation.UserNavigationBottomSheet
 
@@ -54,7 +55,7 @@ import com.example.sabnewsletter.views.usernavigation.UserNavigationBottomSheet
 import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmodel:NavigationDrawerViewModel=NavigationDrawerViewModel()) {
+fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmodel:NavigationDrawerViewModel=NavigationDrawerViewModel(),authenticationRepository: AuthenticationRepository=AuthenticationRepository(context,navController)) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -122,7 +123,7 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
 
             ) {
                 NavGraph(context=context,navController = navController)
-                UserNavigationBottomSheet(viewmodel )
+                UserNavigationBottomSheet(viewmodel, authenticationRepository = authenticationRepository )
             }
         }
     }
