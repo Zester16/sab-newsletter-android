@@ -11,19 +11,27 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.sabnewsletter.navigation.NavGraph
+import com.example.sabnewsletter.navigation.NavigationConstant
 import com.example.sabnewsletter.ui.theme.SabNewsLetterTheme
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val context=getApplicationContext()
@@ -32,16 +40,48 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             // .padding(30.dp)
             SabNewsLetterTheme {
-                Surface(modifier = Modifier
-                    .fillMaxSize(), color = Color.White
+//                Surface(modifier = Modifier
+//                    .fillMaxSize(), color = Color.White
+//
+//                ) {
+//                    NavGraph(context=context,navController = navController)
+//
+//                }
+                Scaffold(
+                    topBar = {
+                        val navBackStackEntry by navController.currentBackStackEntryAsState()
+                        val currentRoute =
+                            navBackStackEntry?.destination?.route
 
-                ) {
-                    NavGraph(context=context,navController = navController)
+                        //to hide bottomNavBar
+                        val skipNav = listOf(NavigationConstant.SPLASH,NavigationConstant.LOGIN)
+                        if (currentRoute in skipNav) return@Scaffold
 
+                        TopAppBar(
+                            colors = TopAppBarDefaults.topAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                titleContentColor = MaterialTheme.colorScheme.primary,
+                            ),
+                            title = {
+                                //Text("Sabencos News Letter")
+                            }
+
+                        )
+                    },
+                ){innerPadding->
+                    Surface(modifier = Modifier.padding(innerPadding)
+                        .fillMaxSize(), color = Color.White
+
+                    ) {
+                        NavGraph(context=context,navController = navController)
+
+                    }
                 }
+
             }
 
-        }
+            }
+
     }
 }
 

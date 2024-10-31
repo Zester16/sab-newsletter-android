@@ -52,12 +52,6 @@ class AuthenticationRepository(private val context:Context,private val navContro
                 if(status.authError==true){
                     logOutUser()
                 }
-
-
-                //}
-                // catch(exception:Exception){
-                //    checkErrors(exception)
-                // }
             }
 
         }
