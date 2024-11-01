@@ -3,11 +3,14 @@ package com.example.sabnewsletter.views.navdrawer
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.DrawerState
@@ -64,9 +67,22 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
             ModalDrawerSheet {
                 //Text("Drawer title", modifier = Modifier.padding(16.dp))
                 val sabencosIcon = painterResource(id = R.drawable.ic_launcher_round)
-                Image(painter = sabencosIcon, contentDescription = "sabencos logo", modifier = Modifier
-                    .width(90.dp)
-                    .height(90.dp), alignment = Alignment.Center)
+                Row {
+                    Image(painter = sabencosIcon, contentDescription = "sabencos logo", modifier = Modifier
+                        .width(90.dp)
+                        .height(90.dp), alignment = Alignment.Center)
+                    IconButton(onClick = {
+                        scope.launch {
+                            drawerState.close()
+                        }
+                    }) {
+                        Icon(  //Show Menu Icon on TopBar
+                            imageVector = Icons.Default.Close,
+                            contentDescription = "Menu"
+                        )
+                    }
+                }
+
                 NavigationDrawerItem(
                     label = { Text(text = "Drawer Item") },
                     selected = false,
@@ -74,7 +90,7 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
                 )
             }
 
-        }, drawerState = drawerState){
+        }, gesturesEnabled = false,drawerState = drawerState){
         Scaffold(
             topBar = {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
