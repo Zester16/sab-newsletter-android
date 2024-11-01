@@ -1,6 +1,6 @@
 package com.example.sabnewsletter.utils
 
-import androidx.navigation.NavController
+
 import androidx.navigation.NavHostController
 import com.example.sabnewsletter.navigation.NavigationConstant
 import java.net.URLDecoder
