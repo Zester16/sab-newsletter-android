@@ -1,7 +1,8 @@
 package com.example.sabnewsletter.views.navdrawer
 
 import android.content.Context
-import androidx.compose.foundation.Image
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -46,24 +47,31 @@ import com.example.sabnewsletter.R
 import com.example.sabnewsletter.navigation.NavGraph
 import com.example.sabnewsletter.navigation.NavigationConstant
 import com.example.sabnewsletter.repository.AuthenticationRepository
+import com.example.sabnewsletter.ui.theme.SabencosBlue
+import com.example.sabnewsletter.ui.theme.SabencosYellow
+import com.example.sabnewsletter.ui.theme.fugazOne
 
 import com.example.sabnewsletter.views.usernavigation.UserNavigationBottomSheet
 
 
 import kotlinx.coroutines.launch
+import androidx.compose.foundation.Image as ImageVector
+
+@RequiresApi(Build.VERSION_CODES.Q)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmodel:NavigationDrawerViewModel=NavigationDrawerViewModel(),authenticationRepository: AuthenticationRepository=AuthenticationRepository(context,navController)) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-
+    val menuIcon = painterResource(id = R.drawable.baseline_menu_24)
+    //val personIcon = painterResource(id = R.drawable.baseline_person_24)
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
                 //Text("Drawer title", modifier = Modifier.padding(16.dp))
                 val sabencosIcon = painterResource(id = R.drawable.ic_launcher_round)
                 Row {
-                    Image(painter = sabencosIcon, contentDescription = "sabencos logo", modifier = Modifier
+                    ImageVector(painter = sabencosIcon, contentDescription = "sabencos logo", modifier = Modifier
                         .width(90.dp)
                         .height(90.dp), alignment = Alignment.Center)
                     IconButton(onClick = {
@@ -98,11 +106,12 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
 
                 TopAppBar(
                     colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        titleContentColor = MaterialTheme.colorScheme.primary,
-                    ),
+                        containerColor = SabencosYellow,
+                        titleContentColor = SabencosBlue,
+
+                        ),
                     title = {
-                        //Text("Sabencos News Letter")
+                        Text("SNL", fontFamily = fugazOne)
                     },
                     navigationIcon = {
                         IconButton(onClick = {scope.launch {
@@ -111,7 +120,7 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
                             }
                         }}) {
                             Icon(  //Show Menu Icon on TopBar
-                                imageVector = Icons.Default.Menu,
+                                painter = menuIcon,
                                 contentDescription = "Menu"
                             )
                         }

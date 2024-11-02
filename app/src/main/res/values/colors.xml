@@ -7,6 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="sabencos_black">#FF05111c</color>
-    <color name="sabencos_yellow">#FFFAAB1A</color>
+    <color name="sabencos_black">#161625</color>
+    <color name="sabencos_yellow">#EFC107</color>
 </resources>
