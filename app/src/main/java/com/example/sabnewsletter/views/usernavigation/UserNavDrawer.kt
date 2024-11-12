@@ -1,5 +1,6 @@
 package com.example.sabnewsletter.views.usernavigation
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -36,14 +37,17 @@ if (showBottomSheet) {
             "Swipe up to open sheet. Swipe down to dismiss.",
             modifier = Modifier.padding(16.dp)
         )
-        Button(onClick = {
-            viewmodel.hideBottomSheet()
-            authenticationRepository.logOutUser() }) {
-            Text("Logout")
+        Column(modifier = Modifier.padding(16.dp)) {
+            Button(onClick = {
+                viewmodel.hideBottomSheet()
+                authenticationRepository.logOutUser() }) {
+                Text("Logout")
 
+            }
+
+            Text(text = "app version ${stringResource(id = R.string.app_version)}")
         }
 
-        Text(text = "app version ${stringResource(id = R.string.app_version)}")
     }
 }
 }
