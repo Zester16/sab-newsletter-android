@@ -2,6 +2,7 @@ package com.example.sabnewsletter.views.navdrawer
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -99,10 +100,9 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute =
                     navBackStackEntry?.destination?.route
-
                 //to hide bottomNavBar
                 val skipNav = listOf(NavigationConstant.SPLASH,NavigationConstant.LOGIN)
-                if (currentRoute in skipNav) return@Scaffold
+                if (currentRoute in skipNav || currentRoute.isNullOrEmpty()) return@Scaffold
 
                 TopAppBar(
                     colors = TopAppBarDefaults.topAppBarColors(

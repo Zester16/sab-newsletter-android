@@ -25,7 +25,7 @@ val sabUrl = "https://www.sabencos.co.in/"
     .writeTimeout(120, TimeUnit.SECONDS)
     .build()
 val retrofitAuthentication = Retrofit.Builder()
-    .baseUrl(sabUrl)
+    .baseUrl(localUrl)
     .client(okHttp)
     .addConverterFactory(GsonConverterFactory
         .create())

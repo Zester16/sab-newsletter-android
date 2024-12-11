@@ -129,7 +129,10 @@ class AuthenticationRepository(private val context:Context,private val navContro
             Log.v("AuthenticationRep:CAEATA","r3efresh done"+response.toString())
 
             if(response.authError==true){
-                logOutUser()
+                coroutineScope.launch(Dispatchers.Main
+                ) {
+                    logOutUser()
+                }
             }
             return true
 
