@@ -52,7 +52,7 @@ fun LoginView(navController: NavController,viewModel: LoginViewModel = LoginView
         Button(onClick = {
             Log.v("input-username",inputUsername)
             if(!inputUsername.isEmpty() && !inputPassword.isEmpty()){
-                viewModel.getSetCredentials(inputUsername,inputPassword)
+                viewModel.getSetCredentials(inputUsername,inputPassword,navController)
             }else{
                 Toast.makeText(context,"Check whether password is added properly and try again",Toast.LENGTH_SHORT).show()
             }
@@ -60,13 +60,14 @@ fun LoginView(navController: NavController,viewModel: LoginViewModel = LoginView
             Text(text = "Click to login")     
         }
 
-        if(isAuthenticated){
-            navController.navigate(NavigationConstant.DASHOBARD){
-                launchSingleTop = true
-                popUpTo(0)
-
-            }
-        }
+//        if(isAuthenticated){
+//            Log.v("LoginView:","isAuthenticated")
+//            navController.navigate(NavigationConstant.DASHOBARD){
+//                launchSingleTop = true
+//                popUpTo("/login"){inclusive=true}
+//
+//            }
+//        }
     }
     
 }

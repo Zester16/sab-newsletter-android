@@ -71,9 +71,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     //versionales
-    val nav_version="2.7.7"
-    val lifecycle_version = "2.7.0"
-    val version_coroutine="1.3.9"
+    val nav_version="2.9.1"
+    val lifecycle_version = "2.9.1"
+    val version_coroutine="1.7.3"
     val version_retrofit="2.11.0"
     val version_live_data="1.6.7"
     val version_coil="2.2.2"
