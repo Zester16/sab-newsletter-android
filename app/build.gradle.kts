@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
 }
 
 android {
@@ -73,8 +74,8 @@ dependencies {
     //versionales
     val nav_version="2.9.1"
     val lifecycle_version = "2.9.1"
-    val version_coroutine="1.7.3"
-    val version_retrofit="2.11.0"
+    val version_coroutine="1.3.9"
+    val version_retrofit="3.0.0"
     val version_live_data="1.6.7"
     val version_coil="2.2.2"
     val version_okhttp="4.12.0"
