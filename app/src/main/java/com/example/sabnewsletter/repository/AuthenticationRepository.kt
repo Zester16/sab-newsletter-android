@@ -10,9 +10,6 @@ import com.example.sabnewsletter.sharedprefrence.UserAuthSharedPrefrence
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.await
@@ -52,12 +49,6 @@ class AuthenticationRepository(private val context:Context,private val navContro
                 if(status.authError==true){
                     logOutUser()
                 }
-
-
-                //}
-                // catch(exception:Exception){
-                //    checkErrors(exception)
-                // }
             }
 
         }
@@ -138,7 +129,10 @@ class AuthenticationRepository(private val context:Context,private val navContro
             Log.v("AuthenticationRep:CAEATA","r3efresh done"+response.toString())
 
             if(response.authError==true){
-                logOutUser()
+                coroutineScope.launch(Dispatchers.Main
+                ) {
+                    logOutUser()
+                }
             }
             return true
 

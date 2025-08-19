@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import androidx.navigation.NavController
 import com.example.sabnewsletter.domain.SabencosNewsletersDomain
-import com.example.sabnewsletter.network.SabencosNewsletters
 import com.example.sabnewsletter.network.SabencosNewslettersObject
 import com.example.sabnewsletter.network.toNewsLetterDatasource
 import kotlinx.coroutines.Dispatchers
