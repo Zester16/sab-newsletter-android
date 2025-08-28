@@ -1,8 +1,10 @@
 package com.example.sabnewsletter.ui.theme
 
 import android.app.Activity
+import android.graphics.Color
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -10,6 +12,8 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import com.example.sabnewsletter.R
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -33,13 +37,23 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+private val SabencosNewLetterTheme = lightColorScheme(
+    primary = SabencosYellow,
+    secondary = SabencosBlue,
+    tertiary= SabencosYellow
+    //tertiary = Purple40
+)
+
 @Composable
 fun SabNewsLetterTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = false,
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
+    val view = LocalView.current
+    val activity = view.context as Activity
+    activity.window.statusBarColor= Color.BLACK
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
@@ -47,7 +61,8 @@ fun SabNewsLetterTheme(
         }
 
         darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        //else -> LightColorScheme
+        else -> SabencosNewLetterTheme
     }
 
     MaterialTheme(

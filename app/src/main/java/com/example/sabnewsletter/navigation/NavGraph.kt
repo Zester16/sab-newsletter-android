@@ -6,7 +6,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 
 import androidx.navigation.compose.composable
-import androidx.navigation.navOptions
 import com.example.sabnewsletter.utils.decode
 import com.example.sabnewsletter.views.dashboard.DashboardView
 import com.example.sabnewsletter.views.login.LoginView
@@ -28,7 +27,6 @@ fun NavGraph(context: Context, navController: NavHostController) {
         composable(NavigationConstant.LOGIN){
             LoginView(navController)
         }
-
         composable(NavigationConstant.WEBVIEW){navBackStackEntry ->
             val newsUrl = navBackStackEntry.arguments?.getString("news_url")
             if (newsUrl != null) {
@@ -39,6 +37,5 @@ fun NavGraph(context: Context, navController: NavHostController) {
         }
 
     }
-
 
 }

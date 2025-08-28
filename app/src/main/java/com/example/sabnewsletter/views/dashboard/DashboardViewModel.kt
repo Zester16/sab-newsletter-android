@@ -1,13 +1,11 @@
 package com.example.sabnewsletter.views.dashboard
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.sabnewsletter.domain.SabencosNewsletersDomain
-import com.example.sabnewsletter.repository.AuthenticationRepository
 import com.example.sabnewsletter.repository.CheckRepository
 import com.example.sabnewsletter.repository.SabencosNewsletterRepository
 import kotlinx.coroutines.CoroutineScope
