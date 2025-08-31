@@ -43,7 +43,7 @@ fun List<SabencosNewsletters>.toNewsLetterDatasource(): List<SabencosNewsletersD
 }
 
 //for getting type two of newsletter
-data class SabencosNewslettersImageless(val date:String,val url:String )
+data class SabencosNewslettersImageless(val date:String,@SerializedName("newsUrl")val url:String )
 fun List<SabencosNewslettersImageless>.toNewsLetterImagelessDatasource():List<SabencosNewsletterImagelessDomain>{
     return this.map{
         SabencosNewsletterImagelessDomain(date = it.date, url = it.url)

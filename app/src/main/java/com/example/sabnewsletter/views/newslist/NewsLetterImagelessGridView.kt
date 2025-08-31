@@ -3,15 +3,12 @@ package com.example.sabnewsletter.views.newslist
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.content.MediaType.Companion.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -23,23 +20,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.foundation.Image as ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.sabnewsletter.R
 import com.example.sabnewsletter.domain.SabencosNewsletterImagelessDomain
 import com.example.sabnewsletter.ui.theme.SabencosBlue
 import com.example.sabnewsletter.ui.theme.SabencosYellow
 import com.example.sabnewsletter.ui.theme.fontUbuntu
-import com.example.sabnewsletter.ui.theme.fontUbuntuLight
 import com.example.sabnewsletter.utils.invokeNavigationToInternalWebBrowser
 
 @Composable
-fun NewsLetterImagelessGridView (newsletterList:List<SabencosNewsletterImagelessDomain>, navController: NavHostController){
+fun NewsLetterImagelessGridView (newsletterList: List<SabencosNewsletterImagelessDomain?>, navController: NavHostController){
 
     //TODO: add image to livemint newsletter
     //val mintBanner = painterResource(id = R.mipmap.ming_top_of_morning)
@@ -47,7 +40,10 @@ fun NewsLetterImagelessGridView (newsletterList:List<SabencosNewsletterImageless
     //    , alignment = Alignment.Center)
     LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 128.dp),Modifier.background(color = SabencosYellow)) {
         items(newsletterList){ news->
-            NewsletterJustDateView(news, navController = navController)
+            if(news != null){
+                NewsletterJustDateView(news, navController = navController)
+            }
+
         }
     }
 }
