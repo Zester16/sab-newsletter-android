@@ -2,6 +2,7 @@ package com.example.sabnewsletter.network
 
 
 import com.example.sabnewsletter.domain.SabencosNewsletersDomain
+import com.example.sabnewsletter.domain.SabencosNewsletterImagelessDomain
 import com.google.gson.annotations.SerializedName
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -34,11 +35,20 @@ val retrofitAuthentication = Retrofit.Builder()
 data class UserLoginRequest(@SerializedName("user_name") val username:String,  @SerializedName("password")val password:String)
 data class UserLoginResponse(val auth:String,val ref:String)
 data class UserTokenCheckResponse(val check:String)
+
+//for getting type one of newsletters
 data class SabencosNewsletters(val title:String,val date:String,@SerializedName("img_url")val imageUrl:String,val url:String)
 fun List<SabencosNewsletters>.toNewsLetterDatasource(): List<SabencosNewsletersDomain> {
     return this.map { SabencosNewsletersDomain(date=it.date,imageUrl=it.imageUrl, url = it.url, title = it.title) }
 }
 
+//for getting type two of newsletter
+data class SabencosNewslettersImageless(val date:String,val url:String )
+fun List<SabencosNewslettersImageless>.toNewsLetterImagelessDatasource():List<SabencosNewsletterImagelessDomain>{
+    return this.map{
+        SabencosNewsletterImagelessDomain(date = it.date, url = it.url)
+    }
+}
 interface Authentication{
     @FormUrlEncoded
     @POST("auth/login")
@@ -53,6 +63,8 @@ interface Authentication{
 interface SabencosNewslettersInterface{
     @GET("newsletter/all-news/bloomberg")
     fun getBloombergNewsletter(@HeaderMap headers: Map<String, String>):Call<List<SabencosNewsletters>>
+    @GET("newsletter/all-news/mint-top-of-morning")
+    fun getMintTopOfMorningNewsletters(@HeaderMap headers: Map<String, String>):Call<List<SabencosNewslettersImageless>>
 }
 
 object SabencosAuthentication {
