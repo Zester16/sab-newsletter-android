@@ -93,7 +93,9 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
                 NavigationDrawerItem(
                     label = { Text(text = "Bloomberg") },
                     selected = currentRoute===NavigationConstant.DASHOBARD,
-                    onClick = { navController.navigate(NavigationConstant.DASHOBARD)
+                    onClick = { navController.navigate(NavigationConstant.DASHOBARD){
+                        popUpTo(NavigationConstant.DASHOBARD)
+                    }
                         scope.launch {
                             drawerState.close()
                         }
@@ -103,7 +105,9 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
                 NavigationDrawerItem(
                     label = { Text(text = "Livemint Newsletter") },
                     selected = currentRoute===NavigationConstant.LIVEMINT,
-                    onClick = { navController.navigate(NavigationConstant.LIVEMINT)
+                    onClick = { navController.navigate(NavigationConstant.LIVEMINT){
+                        popUpTo(NavigationConstant.DASHOBARD)
+                    }
                         scope.launch {
                             drawerState.close()
                         }
