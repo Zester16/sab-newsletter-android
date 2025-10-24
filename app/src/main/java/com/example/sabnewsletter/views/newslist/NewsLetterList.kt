@@ -29,7 +29,6 @@ fun NewsLetterList(newsletersDomain: List<SabencosNewsletersDomain?>,navControll
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsLetterIndividual(news:SabencosNewsletersDomain?,navController: NavHostController){
 

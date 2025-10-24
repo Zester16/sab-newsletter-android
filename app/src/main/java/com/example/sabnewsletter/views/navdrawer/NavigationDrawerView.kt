@@ -66,6 +66,9 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
     val scope = rememberCoroutineScope()
     val menuIcon = painterResource(id = R.drawable.baseline_menu_24)
     //val personIcon = painterResource(id = R.drawable.baseline_person_24)
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute =
+        navBackStackEntry?.destination?.route
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
@@ -88,9 +91,23 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
                 }
 
                 NavigationDrawerItem(
-                    label = { Text(text = "Drawer Item") },
-                    selected = false,
-                    onClick = { /*TODO*/ }
+                    label = { Text(text = "Bloomberg") },
+                    selected = currentRoute===NavigationConstant.DASHOBARD,
+                    onClick = { navController.navigate(NavigationConstant.DASHOBARD)
+                        scope.launch {
+                            drawerState.close()
+                        }
+                    }
+                )
+
+                NavigationDrawerItem(
+                    label = { Text(text = "Livemint Newsletter") },
+                    selected = currentRoute===NavigationConstant.LIVEMINT,
+                    onClick = { navController.navigate(NavigationConstant.LIVEMINT)
+                        scope.launch {
+                            drawerState.close()
+                        }
+                    }
                 )
             }
 

@@ -37,7 +37,19 @@ val Typography = Typography(
     )
     */
 )
+//for brand heading of sabencos
 @RequiresApi(Build.VERSION_CODES.Q)
 val fugazOne= FontFamily(
     Font(R.font.fugaz_one_regular, FontWeight.Light)
 )
+
+//for date heading of sabencos
+@RequiresApi(Build.VERSION_CODES.Q)
+val fontUbuntuLight= FontFamily(
+    Font(R.font.ubuntu_light, FontWeight.Light)
+)
+@RequiresApi(Build.VERSION_CODES.Q)
+val fontUbuntu= FontFamily(
+    Font(R.font.ubuntu_regular, FontWeight.Normal)
+)
+

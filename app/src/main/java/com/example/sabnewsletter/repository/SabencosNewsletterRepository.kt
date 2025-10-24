@@ -4,8 +4,10 @@ import android.content.Context
 import android.util.Log
 import androidx.navigation.NavController
 import com.example.sabnewsletter.domain.SabencosNewsletersDomain
+import com.example.sabnewsletter.domain.SabencosNewsletterImagelessDomain
 import com.example.sabnewsletter.network.SabencosNewslettersObject
 import com.example.sabnewsletter.network.toNewsLetterDatasource
+import com.example.sabnewsletter.network.toNewsLetterImagelessDatasource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.await
@@ -43,5 +45,24 @@ class SabencosNewsletterRepository(private val context: Context, private val nav
             }
 
         }
+    }
+
+    suspend fun getLivemintTotMNewsletter():List<SabencosNewsletterImagelessDomain>?{
+        return withContext(Dispatchers.IO){
+            try{
+                val headers = authRepository.getAuthHeaders(refresh = true)
+                val response =sabencosNewsletters.sabencosNewsletters.getMintTopOfMorningNewsletters(headers = headers).await()
+                return@withContext response.toNewsLetterImagelessDatasource()
+            }
+            catch(exception:Exception){
+                Log.v("SNRepository:exception",exception.toString())
+                val respose =authRepository.checkAuthErrorAndTakeAction(exception)
+                if(respose){
+                    Log.v("SabNewsLetterRepository",respose.toString())
+                    return@withContext getLivemintTotMNewsletter()
+                }
+                return@withContext null
+            }
+      }
     }
 }
