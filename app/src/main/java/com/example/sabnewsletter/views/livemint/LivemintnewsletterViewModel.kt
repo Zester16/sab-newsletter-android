@@ -24,6 +24,10 @@ class LivemintnewsletterViewModel(private val checkRepository: CheckRepository,p
         get() = _newsletterList
     private val job= Job()
 
+    private val _isLoading=MutableLiveData<Boolean>()
+    val isLoading:LiveData<Boolean>
+        get() = _isLoading
+
     private val viewmodelJob= CoroutineScope(job+Dispatchers.Main)
 
     override fun onCleared() {
@@ -37,8 +41,10 @@ class LivemintnewsletterViewModel(private val checkRepository: CheckRepository,p
 
     fun getNewsletter(){
         viewmodelJob.launch(Dispatchers.IO){
+            _isLoading.postValue(true)
             val response =newsletterRepository.getLivemintTotMNewsletter()
             _newsletterList.postValue(response)
+            _isLoading.postValue(false)
             Log.v("livemint-newsletter",response.toString())
         }
     }
