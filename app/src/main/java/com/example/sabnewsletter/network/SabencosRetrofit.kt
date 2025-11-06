@@ -65,6 +65,8 @@ interface SabencosNewslettersInterface{
     fun getBloombergNewsletter(@HeaderMap headers: Map<String, String>):Call<List<SabencosNewsletters>>
     @GET("newsletter/all-news/mint-top-of-morning")
     fun getMintTopOfMorningNewsletters(@HeaderMap headers: Map<String, String>):Call<List<SabencosNewslettersImageless>>
+    @GET("newsletter/all-news/wsj-newsletter")
+    fun getWsjNewsletters(@HeaderMap headers: Map<String, String>):Call<List<SabencosNewsletters>>
 }
 
 object SabencosAuthentication {

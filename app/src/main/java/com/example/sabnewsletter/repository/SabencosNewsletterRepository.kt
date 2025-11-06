@@ -65,4 +65,22 @@ class SabencosNewsletterRepository(private val context: Context, private val nav
             }
       }
     }
+    suspend fun getWSJNewsletters():List<SabencosNewsletersDomain>?{
+        return withContext(Dispatchers.IO){
+            try{
+                val headers = authRepository.getAuthHeaders(refresh = true)
+                val response = sabencosNewsletters.sabencosNewsletters.getWsjNewsletters(headers=headers).await()
+                return@withContext response.toNewsLetterDatasource()
+            }catch(exception:Exception){
+                Log.v("SabencosNewsletterRepository",exception.toString())
+                val response = authRepository.checkAuthErrorAndTakeAction(exception = exception)
+
+                if(response){
+                    return@withContext getWSJNewsletters()
+                }
+                return@withContext null
+
+            }
+        }
+    }
 }
