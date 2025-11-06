@@ -2,6 +2,9 @@ package com.example.sabnewsletter.views.wsj
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.sabnewsletter.domain.SabencosNewsletersDomain
 import com.example.sabnewsletter.repository.CheckRepository
 import com.example.sabnewsletter.repository.SabencosNewsletterRepository
@@ -11,7 +14,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.coroutineContext
 
-class WsjNewsletterViewmodel(private val newsletterRepository: SabencosNewsletterRepository) {
+// viewmodel for WSJ Newsletters
+class WsjNewsletterViewmodel(private val newsletterRepository: SabencosNewsletterRepository):ViewModel() {
 
     private val _newsletterList = MutableLiveData<List<SabencosNewsletersDomain?>?>()
     val newsletterList:LiveData<List<SabencosNewsletersDomain?>?>
@@ -32,4 +36,9 @@ class WsjNewsletterViewmodel(private val newsletterRepository: SabencosNewslette
 
         }
     }
+}
+// viewmodelfactrory for wsjnewsletter
+class WsjNewsletterVMFactory(private val newsletterRepository: SabencosNewsletterRepository):ViewModelProvider.NewInstanceFactory(){
+    override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T=WsjNewsletterViewmodel(newsletterRepository = newsletterRepository) as T
+
 }

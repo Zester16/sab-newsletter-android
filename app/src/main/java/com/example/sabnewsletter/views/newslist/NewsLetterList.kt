@@ -23,7 +23,7 @@ import com.example.sabnewsletter.utils.invokeNavigationToInternalWebBrowser
 @Composable
 fun NewsLetterList(newsletersDomain: List<SabencosNewsletersDomain?>,navController: NavHostController){
 
-    LazyColumn(modifier =Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, ) {
+    LazyColumn(modifier =Modifier.fillMaxWidth(), ) {
         items(newsletersDomain) { newsletter ->
             //newsletersDomain[message]?.let { NewsLetterIndividual(it) }
             if (newsletter != null) {
