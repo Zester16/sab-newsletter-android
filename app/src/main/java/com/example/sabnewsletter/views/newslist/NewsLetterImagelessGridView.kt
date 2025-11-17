@@ -3,6 +3,7 @@ package com.example.sabnewsletter.views.newslist
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,11 +21,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.sabnewsletter.R
 import com.example.sabnewsletter.domain.SabencosNewsletterImagelessDomain
 import com.example.sabnewsletter.ui.theme.SabencosBlue
 import com.example.sabnewsletter.ui.theme.SabencosYellow
@@ -35,10 +38,14 @@ import com.example.sabnewsletter.utils.invokeNavigationToInternalWebBrowser
 fun NewsLetterImagelessGridView (newsletterList: List<SabencosNewsletterImagelessDomain?>, navController: NavHostController){
 
     //TODO: add image to livemint newsletter
-    //val mintBanner = painterResource(id = R.mipmap.ming_top_of_morning)
-    //Image(painter = mintBanner, contentDescription = "sabencos logo", modifier = Modifier
-    //    , alignment = Alignment.Center)
+
     LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 128.dp),Modifier.background(color = SabencosYellow)) {
+
+        item{val mintBanner = painterResource(id = R.drawable.ming_top_of_morning)
+            Image(painter = mintBanner, contentDescription = "sabencos logo", modifier = Modifier
+                , alignment = Alignment.Center)
+        }
+
         items(newsletterList){ news->
             if(news != null){
                 NewsletterJustDateView(news, navController = navController)

@@ -12,6 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.sabnewsletter.domain.SabencosNewsletersDomain
 import com.example.sabnewsletter.repository.CheckRepository
 import androidx.navigation.NavHostController
+import com.example.sabnewsletter.database.NewsLetterImageMapper
 import com.example.sabnewsletter.repository.SabencosNewsletterRepository
 import com.example.sabnewsletter.views.newslist.NewsLetterList
 
@@ -33,7 +34,7 @@ fun BloombergView(context: Context, navController: NavHostController, viewModel:
             Text("Refresh")
         }
         if(!newsLetters.isNullOrEmpty()){
-            NewsLetterList(newsletersDomain = newsLetters!!,navController)
+            NewsLetterList(newsletersDomain = newsLetters!!,navController, newsImage = NewsLetterImageMapper.BLOOMBERG_LOGO)
         }
 
     }

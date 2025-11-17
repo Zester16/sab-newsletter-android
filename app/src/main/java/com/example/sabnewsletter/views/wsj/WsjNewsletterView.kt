@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.sabnewsletter.database.NewsLetterImageMapper
 import com.example.sabnewsletter.domain.SabencosNewsletersDomain
 import com.example.sabnewsletter.repository.SabencosNewsletterRepository
 import com.example.sabnewsletter.views.newslist.NewsLetterList
@@ -20,7 +21,7 @@ fun WsjNewsletterView(context: Context, navController: NavHostController,
     val newsLettersList by viewModel.newsletterList.observeAsState(emptyList<SabencosNewsletersDomain>())
 
     if(!newsLettersList.isNullOrEmpty()){
-        NewsLetterList(newsletersDomain = newsLettersList!!,navController)
+        NewsLetterList(newsletersDomain = newsLettersList!!,navController, newsImage = NewsLetterImageMapper.WSJLOGO)
     }else{
         //    Button(onClick ={viewModel.} ){
 //        Text("Refresh")
