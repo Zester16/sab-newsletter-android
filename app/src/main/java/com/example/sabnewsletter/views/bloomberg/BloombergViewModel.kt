@@ -1,4 +1,4 @@
-package com.example.sabnewsletter.views.dashboard
+package com.example.sabnewsletter.views.bloomberg
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -15,7 +15,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 
-class DashboardViewModel(private val checkRepository: CheckRepository,private val newsletterRepository: SabencosNewsletterRepository):ViewModel() {
+class BloombergViewModel(private val checkRepository: CheckRepository,private val newsletterRepository: SabencosNewsletterRepository):ViewModel() {
     //all dashboard variables
     private val _newsletterList= MutableLiveData<List<SabencosNewsletersDomain?>?>()
     val newsletterList: MutableLiveData<List<SabencosNewsletersDomain?>?>
@@ -50,7 +50,7 @@ init{
 
 
 }
-class DashboardViewModelFactory(private val checkRepository: CheckRepository,private val newsletterRepository: SabencosNewsletterRepository) :
+class BloombergViewModelFactory(private val checkRepository: CheckRepository,private val newsletterRepository: SabencosNewsletterRepository) :
     ViewModelProvider.NewInstanceFactory() {
-    override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T = DashboardViewModel(checkRepository,newsletterRepository) as T
+    override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T = BloombergViewModel(checkRepository,newsletterRepository) as T
 }

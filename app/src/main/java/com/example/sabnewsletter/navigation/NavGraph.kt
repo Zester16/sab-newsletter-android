@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 
 import androidx.navigation.compose.composable
 import com.example.sabnewsletter.utils.decode
-import com.example.sabnewsletter.views.dashboard.DashboardView
+import com.example.sabnewsletter.views.bloomberg.BloombergView
 import com.example.sabnewsletter.views.livemint.LivemintNewsletterView
 import com.example.sabnewsletter.views.wsj.WsjNewsletterView
 import com.example.sabnewsletter.views.login.LoginView
@@ -24,7 +24,7 @@ fun NavGraph(context: Context, navController: NavHostController) {
 
         }
         composable(NavigationConstant.DASHOBARD){
-            DashboardView(context,navController)
+            BloombergView(context,navController)
         }
         composable(NavigationConstant.LIVEMINT){
             LivemintNewsletterView(context,navController)

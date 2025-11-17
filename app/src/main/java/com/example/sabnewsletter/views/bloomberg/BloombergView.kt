@@ -1,11 +1,10 @@
-package com.example.sabnewsletter.views.dashboard
+package com.example.sabnewsletter.views.bloomberg
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import com.example.sabnewsletter.repository.AuthenticationRepository
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -18,8 +17,8 @@ import com.example.sabnewsletter.views.newslist.NewsLetterList
 
 
 @Composable
-fun DashboardView(context: Context, navController: NavHostController, viewModel: DashboardViewModel = viewModel(
-    factory = DashboardViewModelFactory(checkRepository = CheckRepository(context,navController), newsletterRepository=SabencosNewsletterRepository(
+fun BloombergView(context: Context, navController: NavHostController, viewModel: BloombergViewModel = viewModel(
+    factory = BloombergViewModelFactory(checkRepository = CheckRepository(context,navController), newsletterRepository=SabencosNewsletterRepository(
         context, navController = navController))
 )
 ) {
