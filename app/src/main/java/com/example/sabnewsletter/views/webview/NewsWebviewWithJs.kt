@@ -13,11 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
+import kotlin.time.*
+import androidx.activity.compose.BackHandler
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NewsWebviewWithJs( navController: NavController,url:String){
     val context = LocalContext.current
+    val stopwatch = TimeSource.Monotonic
+    val startTime = stopwatch.markNow()
     Log.v("Webview",url)
 
     val webView = remember { WebView(context).apply {
@@ -38,4 +42,13 @@ fun NewsWebviewWithJs( navController: NavController,url:String){
         update = {
             it.loadUrl(url)
         })
+
+    BackHandler(enabled = true) {
+        val stopTime = stopwatch.markNow()
+        val readTime = stopTime - startTime
+//        navController.previousBackStackEntry
+//            ?.savedStateHandle
+//            ?.set("read-time", readTime.inWholeSeconds)
+        navController.popBackStack()
+    }
 }

@@ -113,6 +113,17 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
                         }
                     }
                 )
+                NavigationDrawerItem(
+                    label = { Text(text = "WSJ Newsletter") },
+                    selected = currentRoute===NavigationConstant.WSJ,
+                    onClick = { navController.navigate(NavigationConstant.WSJ){
+                        popUpTo(NavigationConstant.DASHOBARD)
+                    }
+                        scope.launch {
+                            drawerState.close()
+                        }
+                    }
+                )
             }
 
         }, gesturesEnabled = false,drawerState = drawerState){
