@@ -91,7 +91,7 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
                 }
 
                 NavigationDrawerItem(
-                    label = { Text(text = "Bloomberg") },
+                    label = { Text(text = "Dashboard") },
                     selected = currentRoute===NavigationConstant.DASHOBARD,
                     onClick = { navController.navigate(NavigationConstant.DASHOBARD){
                         popUpTo(NavigationConstant.DASHOBARD)
@@ -117,6 +117,17 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
                     label = { Text(text = "WSJ Newsletter") },
                     selected = currentRoute===NavigationConstant.WSJ,
                     onClick = { navController.navigate(NavigationConstant.WSJ){
+                        popUpTo(NavigationConstant.DASHOBARD)
+                    }
+                        scope.launch {
+                            drawerState.close()
+                        }
+                    }
+                )
+                NavigationDrawerItem(
+                    label = { Text(text = "Bloomberg") },
+                    selected = currentRoute===NavigationConstant.BLOOMBERG,
+                    onClick = { navController.navigate(NavigationConstant.BLOOMBERG){
                         popUpTo(NavigationConstant.DASHOBARD)
                     }
                         scope.launch {

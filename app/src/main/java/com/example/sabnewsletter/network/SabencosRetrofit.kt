@@ -3,6 +3,8 @@ package com.example.sabnewsletter.network
 
 import com.example.sabnewsletter.domain.SabencosNewsletersDomain
 import com.example.sabnewsletter.domain.SabencosNewsletterImagelessDomain
+import com.example.sabnewsletter.network.sabencosNLApi.SabencosDashNewsletterCount
+import com.example.sabnewsletter.network.sabencosNLApi.SabencosNewsetterJSONCountRoot
 import com.google.gson.annotations.SerializedName
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -67,6 +69,8 @@ interface SabencosNewslettersInterface{
     fun getMintTopOfMorningNewsletters(@HeaderMap headers: Map<String, String>):Call<List<SabencosNewslettersImageless>>
     @GET("newsletter/all-news/wsj-newsletter")
     fun getWsjNewsletters(@HeaderMap headers: Map<String, String>):Call<List<SabencosNewsletters>>
+    @GET("newsletter/all-news/newsletter-count")
+    fun getAllNewsCount(@HeaderMap headers:Map<String, String>):Call<SabencosNewsetterJSONCountRoot>
 }
 
 object SabencosAuthentication {

@@ -3,9 +3,11 @@ package com.example.sabnewsletter.repository
 import android.content.Context
 import android.util.Log
 import androidx.navigation.NavController
+import com.example.sabnewsletter.domain.SabencosNewsLetterDashCountDomain
 import com.example.sabnewsletter.domain.SabencosNewsletersDomain
 import com.example.sabnewsletter.domain.SabencosNewsletterImagelessDomain
 import com.example.sabnewsletter.network.SabencosNewslettersObject
+import com.example.sabnewsletter.network.sabencosNLApi.toSabencosNewsDashDomain
 import com.example.sabnewsletter.network.toNewsLetterDatasource
 import com.example.sabnewsletter.network.toNewsLetterImagelessDatasource
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +28,23 @@ class SabencosNewsletterRepository(private val context: Context, private val nav
 
         }
 
+    suspend fun getNewsletterDashCount():List<SabencosNewsLetterDashCountDomain?>?{
+        return withContext(Dispatchers.IO){
+            try{
+                val headers = authRepository.getAuthHeaders(true)
+               val  response =sabencosNewsletters.sabencosNewsletters.getAllNewsCount(headers = headers).await()
+                return@withContext response.data.toSabencosNewsDashDomain()
+            }catch (exception:Exception){
+                Log.v("SabNewsLetterRepository:getNewsletterDashCount",exception.toString())
+                val respose =authRepository.checkAuthErrorAndTakeAction(exception)
+                if(respose){
+                    Log.v("SabNewsLetterRepository",respose.toString())
+                    return@withContext getNewsletterDashCount()
+                }
+                return@withContext null
+            }
+        }
+    }
     suspend fun getBloombergNews(): List<SabencosNewsletersDomain>? {
         return withContext(Dispatchers.IO) {
             try {
