@@ -18,6 +18,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.NavController
 import com.example.sabnewsletter.R
 import com.example.sabnewsletter.domain.SabencosNewsLetterDashCountDomain
@@ -29,8 +31,9 @@ import com.example.sabnewsletter.ui.theme.SabencosYellow
 
 @SuppressLint("ViewModelConstructorInComposable")
 @Composable
-fun DashboardView(context: Context,navController: NavController){
-    val dashboardViewModel=DashboardViewModel(SabencosNewsletterRepository(context = context,navController))
+fun DashboardView(context: Context,navController: NavController,dashboardViewModel:DashboardViewModel= viewModel(factory =
+    DashboardViewmodelFactory(SabencosNewsletterRepository(context = context,navController)) )){
+    //val dashboardViewModel=DashboardViewModel(SabencosNewsletterRepository(context = context,navController), )
     val newsCount by dashboardViewModel.dashboardList.observeAsState(emptyList<SabencosNewsLetterDashCountDomain>())
 
 

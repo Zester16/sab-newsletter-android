@@ -3,6 +3,8 @@ package com.example.sabnewsletter.views.dashboard
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.sabnewsletter.domain.SabencosNewsLetterDashCountDomain
 import com.example.sabnewsletter.repository.SabencosNewsletterRepository
 import kotlinx.coroutines.CoroutineScope
@@ -36,4 +38,9 @@ class DashboardViewModel(val repository:SabencosNewsletterRepository):ViewModel(
         }
 
     }
+}
+class DashboardViewmodelFactory(val repository: SabencosNewsletterRepository):ViewModelProvider.NewInstanceFactory(){
+    override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T = DashboardViewModel(repository=repository) as T
+
+
 }
