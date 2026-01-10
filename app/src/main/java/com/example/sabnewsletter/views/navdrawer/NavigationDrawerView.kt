@@ -65,6 +65,8 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val menuIcon = painterResource(id = R.drawable.baseline_menu_24)
+    val backIcon = painterResource(id= R.drawable.baseline_arrow_back_24)
+
     //val personIcon = painterResource(id = R.drawable.baseline_person_24)
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute =
@@ -145,6 +147,8 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
                     navBackStackEntry?.destination?.route
                 //to hide bottomNavBar
                 val skipNav = listOf(NavigationConstant.SPLASH,NavigationConstant.LOGIN)
+                //for swapping icon bar with back navigation button
+                val menuNav = listOf(NavigationConstant.DASHOBARD,NavigationConstant.BLOOMBERG)
                 if (currentRoute in skipNav || currentRoute.isNullOrEmpty()) return@Scaffold
 
                 TopAppBar(
@@ -157,16 +161,26 @@ fun NavigationDrawerApp(context: Context,navController: NavHostController,viewmo
                         Text("SNL", fontFamily = fugazOne)
                     },
                     navigationIcon = {
-                        IconButton(onClick = {scope.launch {
-                            drawerState.apply {
-                                if (isClosed) open() else close()
+                        if(currentRoute in menuNav){
+                            IconButton(
+                                onClick = {scope.launch {
+                                drawerState.apply {
+                                    if (isClosed) open() else close()
+                                }
+                            }}) {
+                                Icon(  //Show Menu Icon on TopBar
+                                    painter = menuIcon,
+                                    contentDescription = "Menu"
+                                )
                             }
-                        }}) {
-                            Icon(  //Show Menu Icon on TopBar
-                                painter = menuIcon,
-                                contentDescription = "Menu"
-                            )
+                        }else{
+                            IconButton(
+                                onClick = { navController.popBackStack() }
+                            ){
+                                Icon(painter=backIcon, contentDescription = "Back Arrow")
+                            }
                         }
+
                     },
                     actions = {
                         IconButton(onClick = { viewmodel.showBottomSheet()}) {
