@@ -2,6 +2,7 @@ package com.example.sabnewsletter.views.newslist
 
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 
@@ -64,6 +66,18 @@ fun NewsLetterImagelessGridView (newsletterList: List<SabencosNewsletterImageles
             defaultElevation = 6.dp
         )) {
             news.date?.let { DateView(it) }
+            if (navController.currentBackStackEntry!!.savedStateHandle.contains("read-time")) {
+                val readTime =
+                    navController.currentBackStackEntry!!.savedStateHandle.get<Long>(
+                        "read-time"
+                    ) ?: 0L
+                Toast.makeText(LocalContext.current,readTime.toString(),Toast.LENGTH_SHORT).show()
+
+                navController.currentBackStackEntry
+                    ?.savedStateHandle
+                    ?.remove<Long>("read-time")
+
+            }
 //            news.date?.let {
 //                val splitDate=it.split("-")
 //                Text(splitDate[0], textAlign = TextAlign.Center, fontSize = 24.sp, color = SabencosYellow,)

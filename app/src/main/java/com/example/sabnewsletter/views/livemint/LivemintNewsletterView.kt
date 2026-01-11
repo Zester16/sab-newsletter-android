@@ -1,15 +1,10 @@
 package com.example.sabnewsletter.views.livemint
 
 import android.content.Context
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -37,19 +32,11 @@ import com.example.sabnewsletter.views.newslist.NewsLetterImagelessGridView
 fun LivemintNewsletterView(context:Context,navController: NavHostController,viewmodel:LivemintnewsletterViewModel= viewModel( factory = LivemintNewsletterViewmodelFactory(checkRepository = CheckRepository(
     context,navController), newsletterRepository= SabencosNewsletterRepository(
     context, navController = navController)
-))
-) {
+))) {
 
     val newsList by viewmodel.newsletterList.observeAsState(emptyList<SabencosNewsletterImagelessDomain>())
     val isLoading by viewmodel.isLoading.observeAsState(false)
-    //val newsList =
-//        mutableListOf <SabencosNewsletterImagelessDomain>(
-//        SabencosNewsletterImagelessDomain(date = "29-August-2025", url = "https://www.livemint.com/mint-top-newsletter/minttopofthemorning29082025.html"),
-//        SabencosNewsletterImagelessDomain(date = "28-August-2025", url = "https://www.livemint.com/mint-top-newsletter/minttopofthemorning28082025.html"),
-//        SabencosNewsletterImagelessDomain(date = "27-August-2025", url = "https://www.livemint.com/mint-top-newsletter/minttopofthemorning27082025.html"),
-//        SabencosNewsletterImagelessDomain(date = "26-August-2025", url = "https://www.livemint.com/mint-top-newsletter/minttopofthemorning26082025.html"),
-//        SabencosNewsletterImagelessDomain(date = "25-August-2025", url = "https://www.livemint.com/mint-top-newsletter/minttopofthemorning25082025.html")
-//    )
+
     Row(modifier = Modifier.fillMaxHeight().background(SabencosYellow), verticalAlignment  = Alignment.Top, horizontalArrangement  = Arrangement.Center) {
         if(isLoading) {
             CircularProgressIndicator(
@@ -62,7 +49,6 @@ fun LivemintNewsletterView(context:Context,navController: NavHostController,view
 
             if(!newsList.isNullOrEmpty()){
                 NewsLetterImagelessGridView(newsletterList = newsList!!, navController = navController)
-            }else{
                 Text("Oops!! Some Error Happend")
                 Button(onClick = {viewmodel.getNewsletter()},) {
                     Text("Click here to reload")
