@@ -45,10 +45,11 @@ fun List<SabencosNewsletters>.toNewsLetterDatasource(): List<SabencosNewsletersD
 }
 
 //for getting type two of newsletter
+//TODO: Make sure to update it once sabencos is sycronized!!! PLEASE
 data class SabencosNewslettersImageless(val date:String,@SerializedName("newsUrl")val url:String )
 fun List<SabencosNewslettersImageless>.toNewsLetterImagelessDatasource():List<SabencosNewsletterImagelessDomain>{
     return this.map{
-        SabencosNewsletterImagelessDomain(date = it.date, url = it.url)
+        SabencosNewsletterImagelessDomain(date = it.date, url = it.url,key = null, id =it.date )
     }
 }
 interface Authentication{

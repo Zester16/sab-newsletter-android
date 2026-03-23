@@ -1,6 +1,7 @@
 package com.example.sabnewsletter.views.livemint
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -15,10 +16,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.sabnewsletter.domain.SabencosNewsletterImagelessDomain
+import com.example.sabnewsletter.navigation.WebviewNewsReadKeyConstant
 import com.example.sabnewsletter.repository.CheckRepository
 import com.example.sabnewsletter.repository.SabencosNewsletterRepository
 import com.example.sabnewsletter.ui.theme.SabencosBlue
@@ -36,6 +39,22 @@ fun LivemintNewsletterView(context:Context,navController: NavHostController,view
 
     val newsList by viewmodel.newsletterList.observeAsState(emptyList<SabencosNewsletterImagelessDomain>())
     val isLoading by viewmodel.isLoading.observeAsState(false)
+    if (navController.currentBackStackEntry!!.savedStateHandle.contains(WebviewNewsReadKeyConstant.NEWSREAD_TIME_KEY)) {
+        val readTime =
+            navController.currentBackStackEntry!!.savedStateHandle.get<Long>(
+                WebviewNewsReadKeyConstant.NEWSREAD_TIME_KEY
+            ) ?: 0L
+        Toast.makeText(LocalContext.current,readTime.toString(), Toast.LENGTH_SHORT).show()
+        newsList?.forEach { news->
+            if(news?.id == "7-January-2026"){
+                news.read=true
+            }
+        }
+        navController.currentBackStackEntry
+            ?.savedStateHandle
+            ?.remove<Long>(WebviewNewsReadKeyConstant.NEWSREAD_TIME_KEY)
+
+    }
 
     Row(modifier = Modifier.fillMaxHeight().background(SabencosYellow), verticalAlignment  = Alignment.Top, horizontalArrangement  = Arrangement.Center) {
         if(isLoading) {

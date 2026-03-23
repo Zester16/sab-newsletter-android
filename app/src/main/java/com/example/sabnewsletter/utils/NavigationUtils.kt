@@ -8,7 +8,7 @@ import java.net.URLEncoder
 
 
 //for invoking navigation to browser, since it takes data from path param
-fun invokeNavigationToInternalWebBrowser(url:String, navHostController: NavHostController){
+fun invokeNavigationToInternalWebBrowser(url:String, navHostController: NavHostController,key:String?,newsId:String?){
     val encodedUrl = encode(url)
     navHostController.navigate(NavigationConstant.WEBVIEW.replace("{news_url}",encodedUrl))
 }

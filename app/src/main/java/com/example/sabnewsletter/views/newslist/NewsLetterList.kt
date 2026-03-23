@@ -54,7 +54,7 @@ fun NewsLetterIndividual(news:SabencosNewsletersDomain?,navController: NavHostCo
     Card(onClick = {
         if (news != null) {
             Log.v("NewsLetter On CLick",news.url)
-            invokeNavigationToInternalWebBrowser(news.url,navController)
+            invokeNavigationToInternalWebBrowser(news.url,navController,null,null)
         }
     },modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(

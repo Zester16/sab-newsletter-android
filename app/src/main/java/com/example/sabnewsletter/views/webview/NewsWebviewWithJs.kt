@@ -15,6 +15,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import kotlin.time.*
 import androidx.activity.compose.BackHandler
+import com.example.sabnewsletter.navigation.WebviewNewsReadKeyConstant
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -48,7 +49,7 @@ fun NewsWebviewWithJs( navController: NavController,url:String){
         val readTime = stopTime - startTime
         navController.previousBackStackEntry
             ?.savedStateHandle
-            ?.set("read-time", readTime.inWholeMilliseconds)
+            ?.set<Long>(WebviewNewsReadKeyConstant.NEWSREAD_TIME_KEY,  readTime.inWholeMilliseconds)
         navController.popBackStack()
     }
 }

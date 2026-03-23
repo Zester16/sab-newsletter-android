@@ -61,23 +61,11 @@ fun NewsLetterImagelessGridView (newsletterList: List<SabencosNewsletterImageles
     fun NewsletterJustDateView(news:SabencosNewsletterImagelessDomain,navController: NavHostController){
         Card(onClick = {
             Log.v("NewsLetter On CLick",news.url)
-            invokeNavigationToInternalWebBrowser(news.url,navController)
+            invokeNavigationToInternalWebBrowser(news.url,navController,news.key,news.id)
         }, modifier = Modifier.padding(12.dp).fillMaxWidth(),elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
         )) {
-            news.date?.let { DateView(it) }
-            if (navController.currentBackStackEntry!!.savedStateHandle.contains("read-time")) {
-                val readTime =
-                    navController.currentBackStackEntry!!.savedStateHandle.get<Long>(
-                        "read-time"
-                    ) ?: 0L
-                Toast.makeText(LocalContext.current,readTime.toString(),Toast.LENGTH_SHORT).show()
-
-                navController.currentBackStackEntry
-                    ?.savedStateHandle
-                    ?.remove<Long>("read-time")
-
-            }
+            news.date?.let { DateView(it,news.read) }
 //            news.date?.let {
 //                val splitDate=it.split("-")
 //                Text(splitDate[0], textAlign = TextAlign.Center, fontSize = 24.sp, color = SabencosYellow,)
@@ -90,7 +78,7 @@ fun NewsLetterImagelessGridView (newsletterList: List<SabencosNewsletterImageles
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
-fun DateView(date:String){
+fun DateView(date:String,read:Boolean){
     val splitDate=date.split("-")
     val month = splitDate[1].uppercase().take(3)
     Column(modifier = Modifier.background(color = SabencosBlue).fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -100,6 +88,11 @@ fun DateView(date:String){
         Spacer(Modifier.height(12.dp))
         Text(splitDate[2],textAlign = TextAlign.Center, fontSize = 24.sp, color = Color.White,)
         Spacer(Modifier.height(12.dp))
+        if(read){
+            val mintBanner = painterResource(id = R.drawable.baseline_check_circle_24)
+            Image(painter = mintBanner, contentDescription = "read", modifier = Modifier
+                    , alignment = Alignment.Center)
+        }
     }
 
 }
