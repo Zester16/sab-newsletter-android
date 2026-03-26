@@ -89,6 +89,7 @@ class SabencosNewsletterRepository(private val context: Context, private val nav
             try{
                 val headers = authRepository.getAuthHeaders(refresh = true)
                 val response = sabencosNewsletters.sabencosNewsletters.getWsjNewsletters(headers=headers).await()
+                Log.v("snlRepo:WSJ:RawREsp",response?.size.toString())
                 return@withContext response.toNewsLetterDatasource()
             }catch(exception:Exception){
                 Log.v("SabencosNewsletterRepository",exception.toString())

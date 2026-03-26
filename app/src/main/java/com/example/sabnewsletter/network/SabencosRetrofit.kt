@@ -6,11 +6,16 @@ import com.example.sabnewsletter.domain.SabencosNewsletterImagelessDomain
 import com.example.sabnewsletter.network.sabencosNLApi.SabencosDashNewsletterCount
 import com.example.sabnewsletter.network.sabencosNLApi.SabencosNewsetterJSONCountRoot
 import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.serialization.Serializable
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.http.POST
 import retrofit2.Call
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -20,6 +25,10 @@ import java.util.concurrent.TimeUnit
 val localUrl="http://10.0.2.2:3001/"
 val sabUrl = "https://www.sabencos.co.in/"
 
+
+private val moshi = Moshi.Builder()
+    .add(KotlinJsonAdapterFactory())
+    .build()
 
     private val okHttp= OkHttpClient.Builder()
     .connectTimeout(60, TimeUnit.SECONDS)
@@ -34,12 +43,20 @@ val retrofitAuthentication = Retrofit.Builder()
         .create())
     .build()
 
+val retrofitSabencos = Retrofit.Builder()
+    .baseUrl(sabUrl)
+    .client(okHttp)
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
+    .build()
+
+
 data class UserLoginRequest(@SerializedName("user_name") val username:String,  @SerializedName("password")val password:String)
 data class UserLoginResponse(val auth:String,val ref:String)
 data class UserTokenCheckResponse(val check:String)
 
 //for getting type one of newsletters
-data class SabencosNewsletters(val title:String,val date:String,@SerializedName("img_url")val imageUrl:String,val url:String,val id:String?,val key:String?)
+@Serializable
+data class SabencosNewsletters(val title:String,val date:String,@Json(name="img_url")val imageUrl:String,val url:String,val id:String?,val key:String?)
 fun List<SabencosNewsletters>.toNewsLetterDatasource(): List<SabencosNewsletersDomain> {
     return this.map { SabencosNewsletersDomain(date=it.date,imageUrl=it.imageUrl, url = it.url, title = it.title, id = it?.id,key=it?.key) }
 }
@@ -81,7 +98,7 @@ object SabencosAuthentication {
 }
 
 object SabencosNewslettersObject{
-    val sabencosNewsletters:SabencosNewslettersInterface by lazy{
-        retrofitAuthentication.create(SabencosNewslettersInterface::class.java)
+    val sabencosNewsletters:SabencosNewslettersInterface by lazy {
+        retrofitSabencos.create(SabencosNewslettersInterface::class.java)
     }
 }

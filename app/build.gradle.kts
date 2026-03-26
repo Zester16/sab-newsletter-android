@@ -109,8 +109,12 @@ dependencies {
     //non google libraries
     implementation ("com.squareup.retrofit2:retrofit:$version_retrofit")
     implementation ("com.squareup.retrofit2:converter-gson:$version_retrofit")
+    implementation ("com.squareup.retrofit2:converter-moshi:${version_retrofit}")
     implementation("com.squareup.okhttp3:okhttp:${version_okhttp}")
 
+    //moshi for parsing unicode
+    implementation ("com.squareup.moshi:moshi:1.12.0")
+    implementation ("com.squareup.moshi:moshi-kotlin:1.12.0")
     //for fetching image
 
     //for getting image from internet
