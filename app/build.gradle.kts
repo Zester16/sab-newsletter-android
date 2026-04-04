@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.sabnewsletter"
+    namespace = "com.oschmid.sabnewsletter"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.sabnewsletter"
+        applicationId = "com.oschmid.sabnewsletter"
         minSdk = 24
         targetSdk = 36
         versionCode = 2
