@@ -1,6 +1,7 @@
 package com.oschmid.sabnewsletter.views.bloomberg
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +25,10 @@ class BloombergViewModel(
     val newsletterList: MutableLiveData<List<SabencosNewsletersDomain?>?>
         get() = _newsletterList
 
+    private val _isLoading = MutableLiveData<Boolean>();
+    val isLoading:LiveData<Boolean>
+        get() = _isLoading
+
     //threads
     private val job = Job()
     private val coroutineJob = CoroutineScope(Dispatchers.Main + job)
@@ -45,8 +50,10 @@ class BloombergViewModel(
 
     fun getNewsLetters() {
         coroutineJob.launch(Dispatchers.IO) {
+            _isLoading.postValue(true)
             val response = newsletterRepository.getBloombergNews()
             _newsletterList.postValue(response)
+            _isLoading.postValue(false)
             Log.v("sabDash", response.toString())
         }
     }
