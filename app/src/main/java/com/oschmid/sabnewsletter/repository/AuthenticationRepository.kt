@@ -3,7 +3,7 @@ package com.oschmid.sabnewsletter.repository
 import android.content.Context
 import android.util.Log
 import androidx.navigation.NavController
-import com.oschmid.sabnewsletter.datasource.AuthDatasource
+import com.oschmid.sabnewsletter.data.AuthDatasource
 import com.oschmid.sabnewsletter.navigation.NavigationConstant
 import com.oschmid.sabnewsletter.network.SabencosAuthentication
 import com.oschmid.sabnewsletter.sharedprefrence.UserAuthSharedPrefrence
