@@ -1,0 +1,71 @@
+package com.oschmid.sabnewsletter.views.bloomberg
+
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.CreationExtras
+import com.oschmid.sabnewsletter.domain.SabencosNewsletersDomain
+import com.oschmid.sabnewsletter.repository.CheckRepository
+import com.oschmid.sabnewsletter.repository.SabencosNewsletterRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+
+
+class BloombergViewModel(
+    private val checkRepository: CheckRepository,
+    private val newsletterRepository: SabencosNewsletterRepository
+) : ViewModel() {
+    //all dashboard variables
+    private val _newsletterList = MutableLiveData<List<SabencosNewsletersDomain?>?>()
+    val newsletterList: MutableLiveData<List<SabencosNewsletersDomain?>?>
+        get() = _newsletterList
+
+    private val _isLoading = MutableLiveData<Boolean>();
+    val isLoading:LiveData<Boolean>
+        get() = _isLoading
+
+    //threads
+    private val job = Job()
+    private val coroutineJob = CoroutineScope(Dispatchers.Main + job)
+    override fun onCleared() {
+        coroutineJob.cancel()
+        super.onCleared()
+    }
+
+    init {
+        getNewsLetters()
+    }
+
+    fun checkToken() {
+        coroutineJob.launch {
+            checkRepository.getToken()
+        }
+
+    }
+
+    fun getNewsLetters() {
+        coroutineJob.launch(Dispatchers.IO) {
+            _isLoading.postValue(true)
+            val response = newsletterRepository.getBloombergNews()
+            _newsletterList.postValue(response)
+            _isLoading.postValue(false)
+            Log.v("sabDash", response.toString())
+        }
+    }
+
+
+}
+
+class BloombergViewModelFactory(
+    private val checkRepository: CheckRepository,
+    private val newsletterRepository: SabencosNewsletterRepository
+) :
+    ViewModelProvider.NewInstanceFactory() {
+    override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T =
+        BloombergViewModel(checkRepository, newsletterRepository) as T
+}

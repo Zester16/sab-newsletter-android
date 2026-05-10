@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.sabnewsletter"
+    namespace = "com.oschmid.sabnewsletter"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.sabnewsletter"
+        applicationId = "com.oschmid.sabnewsletter"
         minSdk = 24
         targetSdk = 36
         versionCode = 2
@@ -109,8 +109,14 @@ dependencies {
     //non google libraries
     implementation ("com.squareup.retrofit2:retrofit:$version_retrofit")
     implementation ("com.squareup.retrofit2:converter-gson:$version_retrofit")
+    implementation ("com.squareup.retrofit2:converter-moshi:${version_retrofit}")
     implementation("com.squareup.okhttp3:okhttp:${version_okhttp}")
 
+    //moshi for parsing unicode
+    implementation ("com.squareup.moshi:moshi:1.12.0")
+    implementation ("com.squareup.moshi:moshi-kotlin:1.12.0")
+
+    implementation("androidx.webkit:webkit:1.15.0")
     //for fetching image
 
     //for getting image from internet
