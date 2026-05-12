@@ -62,7 +62,11 @@ fun NewsLetterIndividual(news: SabencosNewsletersDomain?, navController: NavHost
         onClick = {
             if (news != null) {
                 Log.v("NewsLetter On CLick", news.url)
-                invokeNavigationToInternalWebBrowser(news.url, navController, null, null)
+                Log.v("NewsLetter On CLick key", news.key.toString())
+                invokeNavigationToInternalWebBrowser(
+                    news.url, navController, newsId = news.id,
+                    key = news.key,
+                )
             }
         },
         modifier = Modifier.fillMaxWidth(),

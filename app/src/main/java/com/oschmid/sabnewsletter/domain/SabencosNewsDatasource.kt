@@ -7,7 +7,7 @@ data class SabencosNewsletersDomain(
     val date: String,
     val url: String,
     val imageUrl: String,
-    val title: String,
+    val title: String?,
     val id: String?,
     val key: String?
 )

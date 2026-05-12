@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.google.gson.Gson
+import com.oschmid.sabnewsletter.data.UserReadDatasource
 import com.oschmid.sabnewsletter.utils.decode
 import com.oschmid.sabnewsletter.views.bloomberg.BloombergView
 import com.oschmid.sabnewsletter.views.dashboard.DashboardView
@@ -38,9 +40,16 @@ fun NavGraph(context: Context, navController: NavHostController) {
         }
         composable(NavigationConstant.WEBVIEW) { navBackStackEntry ->
             val newsUrl = navBackStackEntry.arguments?.getString("news_url")
+            val newsBody = navBackStackEntry.arguments?.getString("news_body")
             if (newsUrl != null) {
                 val decodedUrl = decode(newsUrl)
-                NewsWebviewWithJs(navController, decodedUrl)
+                var newsBodyDecoded: UserReadDatasource? =null;
+
+                if(newsBody != null){
+                 newsBodyDecoded=  Gson().fromJson(decode(newsBody), UserReadDatasource::class.java)
+                }
+
+                NewsWebviewWithJs(navController, decodedUrl,newsBodyDecoded)
             }
 
         }

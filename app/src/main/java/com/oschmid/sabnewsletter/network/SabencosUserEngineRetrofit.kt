@@ -6,6 +6,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.HeaderMap
 import retrofit2.http.POST
 import java.util.concurrent.TimeUnit
@@ -28,7 +29,7 @@ private val okHttp = OkHttpClient.Builder()
 // interface for sending information
 interface SabencosUserEngineInterface{
     @POST("/v1/newsread")
-    fun sendUserRead(@HeaderMap headers: Map<String, String>,userReadDatasource: UserReadDatasource): Call<UserReadResponse>;
+    fun sendUserRead(@HeaderMap headers: Map<String, String>,@Body userReadDatasource: UserReadDatasource): Call<UserReadResponse>;
 
 }
 

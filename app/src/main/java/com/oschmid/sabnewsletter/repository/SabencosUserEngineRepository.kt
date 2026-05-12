@@ -24,7 +24,7 @@ class SabencosUserEngineRepository(private val context: Context,
 
             return withContext(Dispatchers.IO){
                 try{
-                val headers = authRepository.getAuthHeaders(refresh = true)
+                val headers = authRepository.getAuthHeaders(refresh = false)
                 val response = userEngineApi.userEngineRetrofitObject.sendUserRead(headers = headers, userReadDatasource = userReadDatasource).await()
                 Log.v("${repositoryName}-$functionName}",response.toString())
                 if(response.statusCode ==0){
@@ -33,7 +33,7 @@ class SabencosUserEngineRepository(private val context: Context,
                     return@withContext true
                 }
                 }catch (exception:Exception){
-                    Log.v("${repositoryName}-$functionName}",exception.toString())
+                    Log.v("${repositoryName}-${functionName}",exception.toString())
                     return@withContext false
                 }
             }

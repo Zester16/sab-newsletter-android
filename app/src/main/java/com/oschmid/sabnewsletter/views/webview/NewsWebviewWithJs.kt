@@ -1,5 +1,6 @@
 package com.oschmid.sabnewsletter.views.webview
 
+import android.content.Context
 import android.os.Build
 import android.util.Log
 import android.webkit.WebSettings
@@ -14,17 +15,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
+import com.oschmid.sabnewsletter.data.UserReadDatasource
 import com.oschmid.sabnewsletter.navigation.WebviewNewsReadKeyConstant
+import com.oschmid.sabnewsletter.repository.SabencosUserEngineRepository
 import kotlin.time.TimeSource
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun NewsWebviewWithJs(navController: NavController, url: String) {
+fun NewsWebviewWithJs(                      navController: NavController, url: String, newsBody:UserReadDatasource?) {
     val context = LocalContext.current
+    val  sabencosUserEngineRepository= SabencosUserEngineRepository(context=context, navController = navController)
+    val webviewViewmodel = NewsWebviewViewmodel(sabencosUserEngineRepository = sabencosUserEngineRepository)
+
     val stopwatch = TimeSource.Monotonic
     val startTime = stopwatch.markNow()
-    Log.v("Webview", url)
-
+    //Log.v("Webview", url)
+    //Log.v("webViewBody",newsBody.toString())
     val webView = remember {
         WebView(context).apply {
             webViewClient = WebViewClient()
@@ -49,9 +55,14 @@ fun NewsWebviewWithJs(navController: NavController, url: String) {
     BackHandler(enabled = true) {
         val stopTime = stopwatch.markNow()
         val readTime = stopTime - startTime
+        val readTimeInt = readTime.inWholeSeconds.toInt()
         navController.previousBackStackEntry
             ?.savedStateHandle
-            ?.set<Long>(WebviewNewsReadKeyConstant.NEWSREAD_TIME_KEY, readTime.inWholeMilliseconds)
+            ?.set<Int>(WebviewNewsReadKeyConstant.NEWSREAD_TIME_KEY, readTimeInt)
         navController.popBackStack()
+        if (newsBody != null && readTimeInt>30 ) {
+            newsBody.readTime = readTimeInt
+            webviewViewmodel.addNewsread(newsBody)
+        }
     }
 }
