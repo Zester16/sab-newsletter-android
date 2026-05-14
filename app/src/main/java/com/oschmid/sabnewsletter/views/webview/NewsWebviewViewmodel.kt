@@ -2,6 +2,7 @@ package com.oschmid.sabnewsletter.views.webview
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.oschmid.sabnewsletter.data.UserReadDatasource
 import com.oschmid.sabnewsletter.repository.SabencosUserEngineRepository
 import kotlinx.coroutines.CoroutineScope
@@ -15,6 +16,9 @@ class NewsWebviewViewmodel(val sabencosUserEngineRepository: SabencosUserEngineR
     private val viewemodelJob= CoroutineScope(Dispatchers.Main + job)
 
 
+    /**
+     * function adds newsread, provided news was read
+    **/
     fun addNewsread(userReadDatasource: UserReadDatasource){
         viewemodelJob.launch(Dispatchers.IO) {
 
@@ -26,3 +30,8 @@ class NewsWebviewViewmodel(val sabencosUserEngineRepository: SabencosUserEngineR
 
 }
 
+class NewsWebViewmodelFactory(val sabencosUserEngineRepository: SabencosUserEngineRepository): ViewModelProvider.NewInstanceFactory(){
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return NewsWebviewViewmodel(sabencosUserEngineRepository) as T
+    }
+}

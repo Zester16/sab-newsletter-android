@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.oschmid.sabnewsletter.data.UserReadDatasource
 import com.oschmid.sabnewsletter.navigation.WebviewNewsReadKeyConstant
@@ -22,10 +23,12 @@ import kotlin.time.TimeSource
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun NewsWebviewWithJs(                      navController: NavController, url: String, newsBody:UserReadDatasource?) {
-    val context = LocalContext.current
-    val  sabencosUserEngineRepository= SabencosUserEngineRepository(context=context, navController = navController)
-    val webviewViewmodel = NewsWebviewViewmodel(sabencosUserEngineRepository = sabencosUserEngineRepository)
+fun NewsWebviewWithJs(context:Context,navController: NavController, url: String, newsBody:UserReadDatasource?,
+                       webviewViewmodel: NewsWebviewViewmodel= viewModel(factory = NewsWebViewmodelFactory(SabencosUserEngineRepository(context=context, navController = navController)))
+) {
+    //val context = LocalContext.current
+    //val  sabencosUserEngineRepository=
+    //val webviewViewmodel = NewsWebviewViewmodel(sabencosUserEngineRepository = sabencosUserEngineRepository)
 
     val stopwatch = TimeSource.Monotonic
     val startTime = stopwatch.markNow()

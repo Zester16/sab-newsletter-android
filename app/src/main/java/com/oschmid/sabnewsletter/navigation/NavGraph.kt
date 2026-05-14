@@ -49,7 +49,7 @@ fun NavGraph(context: Context, navController: NavHostController) {
                  newsBodyDecoded=  Gson().fromJson(decode(newsBody), UserReadDatasource::class.java)
                 }
 
-                NewsWebviewWithJs(navController, decodedUrl,newsBodyDecoded)
+                NewsWebviewWithJs(context,navController, decodedUrl,newsBodyDecoded)
             }
 
         }
