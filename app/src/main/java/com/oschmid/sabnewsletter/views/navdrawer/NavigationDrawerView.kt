@@ -3,6 +3,7 @@ package com.oschmid.sabnewsletter.views.navdrawer
 
 import android.content.Context
 import android.os.Build
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -62,7 +63,7 @@ fun NavigationDrawerApp(
     val scope = rememberCoroutineScope()
     val menuIcon = painterResource(id = R.drawable.baseline_menu_24)
     val backIcon = painterResource(id = R.drawable.baseline_arrow_back_24)
-
+    val dispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
     //val personIcon = painterResource(id = R.drawable.baseline_person_24)
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute =
@@ -183,7 +184,10 @@ fun NavigationDrawerApp(
                             }
                         } else {
                             IconButton(
-                                onClick = { navController.popBackStack() }
+                                onClick = {
+                                    dispatcher?.onBackPressed()
+                                    //navController.popBackStack()
+                                    }
                             ) {
                                 Icon(painter = backIcon, contentDescription = "Back Arrow")
                             }
