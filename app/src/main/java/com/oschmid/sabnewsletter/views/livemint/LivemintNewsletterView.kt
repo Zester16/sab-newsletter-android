@@ -48,22 +48,23 @@ fun LivemintNewsletterView(
 
     val newsList by viewmodel.newsletterList.observeAsState(emptyList<SabencosNewsletterImagelessDomain>())
     val isLoading by viewmodel.isLoading.observeAsState(false)
-    if (navController.currentBackStackEntry!!.savedStateHandle.contains(WebviewNewsReadKeyConstant.NEWSREAD_TIME_KEY)) {
-        val readTime =
-            navController.currentBackStackEntry!!.savedStateHandle.get<Long>(
-                WebviewNewsReadKeyConstant.NEWSREAD_TIME_KEY
-            ) ?: 0L
-        Toast.makeText(LocalContext.current, readTime.toString(), Toast.LENGTH_SHORT).show()
-        newsList?.forEach { news ->
-            if (news?.id == "7-January-2026") {
-                news.read = true
-            }
-        }
-        navController.currentBackStackEntry
-            ?.savedStateHandle
-            ?.remove<Long>(WebviewNewsReadKeyConstant.NEWSREAD_TIME_KEY)
-
-    }
+    //TODO: Stubbing this code for further refinement
+//    if (navController.currentBackStackEntry!!.savedStateHandle.contains(WebviewNewsReadKeyConstant.NEWSREAD_TIME_KEY)) {
+//        val readTime =
+//            navController.currentBackStackEntry!!.savedStateHandle.get<Int>(
+//                WebviewNewsReadKeyConstant.NEWSREAD_TIME_KEY
+//            ) ?: 0
+//        Toast.makeText(LocalContext.current, readTime.toString(), Toast.LENGTH_SHORT).show()
+//        newsList?.forEach { news ->
+//            if (news?.id == "7-January-2026") {
+//                news.read = true
+//            }
+//        }
+//        navController.currentBackStackEntry
+//            ?.savedStateHandle
+//            ?.remove<Int>(WebviewNewsReadKeyConstant.NEWSREAD_TIME_KEY)
+//
+//    }
 
     Row(
         modifier = Modifier
