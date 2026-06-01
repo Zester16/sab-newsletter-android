@@ -105,9 +105,11 @@ class SabencosNewsletterRepository(
                 val headers = authRepository.getAuthHeaders(refresh = true)
                 val response =
                     sabencosNewsletters.sabencosNewsletters.getWsjNewsletters(headers = headers)
-                        .await()
+                        .await().toNewsLetterDatasource()
+
+                val userNewsreads = sabencosUserEngineRepository.getUserNewsReads(response[0].key!!)
                 Log.v("snlRepo:WSJ:RawREsp", response?.size.toString())
-                return@withContext response.toNewsLetterDatasource()
+                return@withContext setNewsletterDomainForNewsRead(userNewsReads = userNewsreads, newsletters = response)
             } catch (exception: Exception) {
                 Log.v("SabencosNewsletterRepository", exception.toString())
                 val response = authRepository.checkAuthErrorAndTakeAction(exception = exception)
