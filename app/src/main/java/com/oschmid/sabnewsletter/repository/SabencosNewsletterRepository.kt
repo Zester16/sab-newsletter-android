@@ -3,6 +3,7 @@ package com.oschmid.sabnewsletter.repository
 import android.content.Context
 import android.util.Log
 import androidx.navigation.NavController
+import com.oschmid.sabnewsletter.data.UserNewsReadDatasource
 import com.oschmid.sabnewsletter.domain.SabencosNewsLetterDashCountDomain
 import com.oschmid.sabnewsletter.domain.SabencosNewsletersDomain
 import com.oschmid.sabnewsletter.domain.SabencosNewsletterImagelessDomain
@@ -25,6 +26,7 @@ class SabencosNewsletterRepository(
 ) {
 
     private val authRepository = AuthenticationRepository(context, navController)
+    private val sabencosUserEngineRepository = SabencosUserEngineRepository(context = context, navController = navController)
     private val sabencosNewsletters: SabencosNewslettersObject
         get() {
             return SabencosNewslettersObject
@@ -58,8 +60,12 @@ class SabencosNewsletterRepository(
                 val headers = authRepository.getAuthHeaders(true)
                 val response =
                     sabencosNewsletters.sabencosNewsletters.getBloombergNewsletter(headers = headers)
-                        .await()
-                return@withContext response.toNewsLetterDatasource()
+                        .await().toNewsLetterDatasource()
+                val userNewsreads = sabencosUserEngineRepository.getUserNewsReads("bl-ns")
+
+                //Log.v("SNRepositoryNewsReads",userNewsreads.size.toString())
+
+                return@withContext setNewsletterDomainForNewsRead(userNewsReads = userNewsreads.reversed(), newsletters = response)
             } catch (exception: Exception) {
                 Log.v("SNRepository:exception", exception.toString())
                 val respose = authRepository.checkAuthErrorAndTakeAction(exception)
@@ -113,5 +119,40 @@ class SabencosNewsletterRepository(
 
             }
         }
+
+
     }
+
+    //This function will iterate through both list and
+    //currently it takes 4.94 seconds to hit both downstreams and get data
+    private fun setNewsletterDomainForNewsRead(userNewsReads:List<UserNewsReadDatasource>?,newsletters:List<SabencosNewsletersDomain>?):List<SabencosNewsletersDomain>?{
+        if(userNewsReads.isNullOrEmpty()){
+            return newsletters
+        }
+        if(newsletters.isNullOrEmpty()){
+            return newsletters
+        }
+        val newsReadIterator:ListIterator<UserNewsReadDatasource> = userNewsReads.listIterator()
+        val newslettersIterator:ListIterator<SabencosNewsletersDomain> = newsletters.listIterator()
+        var newsletter = newslettersIterator.next()
+        var newsRead = newsReadIterator.next()
+        var newsletterIndex = newslettersIterator.nextIndex()
+
+        //TODO: Add iterator and update value
+        while (newslettersIterator.hasNext() && newsReadIterator.hasNext())
+        {
+
+            if(newsRead.newsId == newsletter.id) {
+                newsletters[newsletterIndex].status = newsRead.status
+                newsRead = newsReadIterator.next()
+                Log.v("snlStatus",newsletter.title.toString()+newsletterIndex.toString())
+            }
+            newsletterIndex = newslettersIterator.nextIndex()
+            newslettersIterator.next()
+            newsletter= newsletters[newsletterIndex]
+
+        }
+        return newsletters
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.oschmid.sabnewsletter.network
 
+import com.oschmid.sabnewsletter.data.UserNewsReadDatasource
+import com.oschmid.sabnewsletter.data.UserNewsReadResponseDatasource
 import com.oschmid.sabnewsletter.data.UserReadDatasource
 import com.oschmid.sabnewsletter.data.UserReadResponse
 import okhttp3.OkHttpClient
@@ -7,8 +9,10 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.HeaderMap
 import retrofit2.http.POST
+import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
 
@@ -31,6 +35,8 @@ interface SabencosUserEngineInterface{
     @POST("/v1/newsread")
     fun sendUserRead(@HeaderMap headers: Map<String, String>,@Body userReadDatasource: UserReadDatasource): Call<UserReadResponse>;
 
+    @GET("/v1/newsread/{newsId}")
+    fun getUserNewsRead(@Path("newsId") newsId: String, @HeaderMap headers: Map<String, String>): Call<UserNewsReadResponseDatasource>
 }
 
 object SabencosUserEngineRetrofitObject{

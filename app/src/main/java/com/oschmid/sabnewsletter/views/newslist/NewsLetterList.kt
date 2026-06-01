@@ -2,6 +2,8 @@ package com.oschmid.sabnewsletter.views.newslist
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
@@ -81,6 +83,21 @@ fun NewsLetterIndividual(news: SabencosNewsletersDomain?, navController: NavHost
             alignment = Alignment.Center
         )
         news?.date?.let { Text(it) }
+
+        if(news?.status!! >0){
+            var color:Color
+            if (news.status==1){
+                color = Color.Yellow
+            }else{
+                color = Color.Green
+            }
+            Spacer(
+                modifier = Modifier
+                    .height(16.dp)      // Required for vertical visibility
+                    .fillMaxWidth()     // Fill horizontal space
+                    .background(color = color) // Your desired color
+            )
+        }
 
     }
 }

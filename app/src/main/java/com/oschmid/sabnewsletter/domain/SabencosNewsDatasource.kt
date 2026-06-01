@@ -9,7 +9,8 @@ data class SabencosNewsletersDomain(
     val imageUrl: String,
     val title: String?,
     val id: String?,
-    val key: String?
+    val key: String?,
+    var status:Int?=0
 )
 
 data class SabencosNewsletterImagelessDomain(

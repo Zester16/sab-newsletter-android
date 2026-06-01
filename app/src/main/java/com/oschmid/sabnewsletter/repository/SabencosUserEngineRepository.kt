@@ -3,6 +3,7 @@ package com.oschmid.sabnewsletter.repository
 import android.content.Context
 import android.util.Log
 import androidx.navigation.NavController
+import com.oschmid.sabnewsletter.data.UserNewsReadDatasource
 import com.oschmid.sabnewsletter.data.UserReadDatasource
 import com.oschmid.sabnewsletter.network.SabencosUserEngineInterface
 import com.oschmid.sabnewsletter.network.SabencosUserEngineRetrofitObject
@@ -38,5 +39,23 @@ class SabencosUserEngineRepository(private val context: Context,
                 }
             }
 
+    }
+
+    suspend fun getUserNewsReads(newsId:String):List<UserNewsReadDatasource>{
+        val functionName="getUserNewsReads"
+        return withContext(Dispatchers.IO) {
+            try {
+                val functionName="getUserNewsReads"
+                val headers = authRepository.getAuthHeaders(refresh = false)
+                val response = userEngineApi.userEngineRetrofitObject.getUserNewsRead(
+                    newsId = newsId,
+                    headers = headers
+                ).await()
+                return@withContext response.data!!
+            } catch (exception: Exception) {
+                Log.v("${repositoryName}-${functionName}",exception.toString())
+                    return@withContext emptyList()
+            }
+        }
     }
 }
