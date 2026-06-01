@@ -14,12 +14,13 @@ fun invokeNavigationToInternalWebBrowser(
     url: String,
     navHostController: NavHostController,
     key: String?,
-    newsId: String?
+    newsId: String?,
+    date:String?
 ) {
     val encodedUrl = encode(url)
     val webviewPath=NavigationConstant.WEBVIEW.replace("{news_url}", encodedUrl)
-    if(!key.isNullOrEmpty() && !newsId.isNullOrEmpty()){
-        val userDataSource=UserReadDatasource(newsId=newsId, newsletterId = key, status = 2, readTime = 0)
+    if(!key.isNullOrEmpty() && !newsId.isNullOrEmpty() && !date.isNullOrEmpty()){
+        val userDataSource=UserReadDatasource(newsId=newsId, newsletterId = key, status = 2, readTime = 0,date = date)
         val encodedNewsBody = encode(Gson().toJson(userDataSource))
         navHostController.navigate(webviewPath.replace("{news_body}",encodedNewsBody))
     }else{

@@ -65,7 +65,7 @@ class SabencosNewsletterRepository(
 
                 //Log.v("SNRepositoryNewsReads",userNewsreads.size.toString())
 
-                return@withContext setNewsletterDomainForNewsRead(userNewsReads = userNewsreads.reversed(), newsletters = response)
+                return@withContext setNewsletterDomainForNewsRead(userNewsReads = userNewsreads, newsletters = response)
             } catch (exception: Exception) {
                 Log.v("SNRepository:exception", exception.toString())
                 val respose = authRepository.checkAuthErrorAndTakeAction(exception)

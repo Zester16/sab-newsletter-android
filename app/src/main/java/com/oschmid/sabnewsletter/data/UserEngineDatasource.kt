@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 //this request body is used for sending user read details
 @Serializable
-data class UserReadDatasource( @SerializedName("newsId")val newsId:String,@SerializedName("newsletterId")val newsletterId:String,@SerializedName("status")val status:Int,@SerializedName("timeRead") var readTime:Int)
+data class UserReadDatasource( @SerializedName("newsId")val newsId:String,@SerializedName("newsletterId")val newsletterId:String,@SerializedName("status")val status:Int,@SerializedName("timeRead") var readTime:Int,@SerializedName("publishedDate") val date:String)
 
 //this response body is used for getting news read for a particular news source
 @Serializable

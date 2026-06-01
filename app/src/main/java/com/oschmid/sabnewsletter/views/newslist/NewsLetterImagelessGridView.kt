@@ -72,7 +72,7 @@ fun NewsletterJustDateView(
     Card(
         onClick = {
             Log.v("NewsLetter On CLick", news.url)
-            invokeNavigationToInternalWebBrowser(news.url, navController, news.key, news.id)
+            invokeNavigationToInternalWebBrowser(news.url, navController, news.key, news?.id, date = news.date)
         },
         modifier = Modifier
             .padding(12.dp)

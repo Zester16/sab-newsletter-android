@@ -68,6 +68,7 @@ fun NewsLetterIndividual(news: SabencosNewsletersDomain?, navController: NavHost
                 invokeNavigationToInternalWebBrowser(
                     news.url, navController, newsId = news.id,
                     key = news.key,
+                    date = news.date
                 )
             }
         },
