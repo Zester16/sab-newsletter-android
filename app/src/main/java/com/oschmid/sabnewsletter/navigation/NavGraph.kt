@@ -12,6 +12,7 @@ import com.oschmid.sabnewsletter.views.bloomberg.BloombergView
 import com.oschmid.sabnewsletter.views.dashboard.DashboardView
 import com.oschmid.sabnewsletter.views.livemint.LivemintNewsletterView
 import com.oschmid.sabnewsletter.views.login.LoginView
+import com.oschmid.sabnewsletter.views.national.NationalView
 import com.oschmid.sabnewsletter.views.splash.SplashView
 import com.oschmid.sabnewsletter.views.webview.NewsWebviewWithJs
 import com.oschmid.sabnewsletter.views.wsj.WsjNewsletterView
@@ -34,6 +35,9 @@ fun NavGraph(context: Context, navController: NavHostController) {
         }
         composable(NavigationConstant.WSJ) {
             WsjNewsletterView(context, navController)
+        }
+        composable(NavigationConstant.NATIONAL){
+            NationalView(context,navController)
         }
         composable(NavigationConstant.LOGIN) {
             LoginView(navController)

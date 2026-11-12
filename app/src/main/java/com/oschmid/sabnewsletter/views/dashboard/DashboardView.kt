@@ -3,9 +3,12 @@ package com.oschmid.sabnewsletter.views.dashboard
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -39,14 +42,15 @@ fun DashboardView(
 ) {
     //val dashboardViewModel=DashboardViewModel(SabencosNewsletterRepository(context = context,navController), )
     val newsCount by dashboardViewModel.dashboardList.observeAsState(emptyList<SabencosNewsLetterDashCountDomain>())
-
-
+//    Box(Modifier.width(150.dp).height(150.dp)) {
+//        FunkyCardDraw()
+//    }
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 128.dp),
         Modifier
             .background(color = SabencosYellow)
             .fillMaxWidth()
-            .fillMaxHeight(),
+            //.fillMaxHeight(),
     ) {
 
         if (!newsCount.isNullOrEmpty()) {

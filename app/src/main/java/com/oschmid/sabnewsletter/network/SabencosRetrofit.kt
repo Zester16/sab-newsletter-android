@@ -118,6 +118,12 @@ interface SabencosNewslettersInterface {
     @GET("newsletter/all-news/wsj-newsletter")
     fun getWsjNewsletters(@HeaderMap headers: Map<String, String>): Call<List<SabencosNewsletters>>
 
+    @GET("newsletter/all-news/national")
+    fun getNationalNewsletters(@HeaderMap headers: Map<String, String>): Call<List<SabencosNewsletters>>
+
+    @GET("newsletter/all-news/sausa")
+    fun getSausaNewsletters(@HeaderMap headers: Map<String, String>): Call<List<SabencosNewsletters>>
+
     @GET("newsletter/all-news/newsletter-count")
     fun getAllNewsCount(@HeaderMap headers: Map<String, String>): Call<SabencosNewsetterJSONCountRoot>
 }

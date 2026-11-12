@@ -8,6 +8,7 @@ object NavigationConstant {
     const val LIVEMINT = "/livemint"
     const val WSJ = "/wsj"
     const val BLOOMBERG = "/bloomberg"
+    const val NATIONAL = "/national"
     const val WEBVIEW = "/webview?news_url={news_url}&news_body={news_body}"
 
 }

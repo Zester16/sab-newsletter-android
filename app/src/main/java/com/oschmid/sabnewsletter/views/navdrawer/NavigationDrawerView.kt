@@ -143,6 +143,18 @@ fun NavigationDrawerApp(
                         }
                     }
                 )
+                NavigationDrawerItem(
+                    label = { Text(text = "The National") },
+                    selected = currentRoute === NavigationConstant.NATIONAL,
+                    onClick = {
+                        navController.navigate(NavigationConstant.NATIONAL) {
+                            popUpTo(NavigationConstant.DASHOBARD)
+                        }
+                        scope.launch {
+                            drawerState.close()
+                        }
+                    }
+                )
             }
 
         }, gesturesEnabled = false, drawerState = drawerState

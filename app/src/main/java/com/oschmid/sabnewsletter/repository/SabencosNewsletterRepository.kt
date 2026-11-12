@@ -124,6 +124,32 @@ class SabencosNewsletterRepository(
 
 
     }
+    //for getting national newsletter
+    suspend fun getNationalNews(): List<SabencosNewsletersDomain>? {
+        return withContext(Dispatchers.IO) {
+            try {
+                Log.v("in national get news", "to getnews")
+                val headers = authRepository.getAuthHeaders(true)
+                val response =
+                    sabencosNewsletters.sabencosNewsletters.getNationalNewsletters(headers = headers)
+                        .await().toNewsLetterDatasource()
+                val userNewsreads = sabencosUserEngineRepository.getUserNewsReads("tnuae-ns")
+
+                //Log.v("SNRepositoryNewsReads",userNewsreads.size.toString())
+
+                return@withContext setNewsletterDomainForNewsRead(userNewsReads = userNewsreads, newsletters = response)
+            } catch (exception: Exception) {
+                Log.v("SNRepository:exception", exception.toString())
+                val respose = authRepository.checkAuthErrorAndTakeAction(exception)
+                if (respose) {
+                    Log.v("SabNewsLetterRepository", respose.toString())
+                    return@withContext getBloombergNews()
+                }
+                return@withContext null
+            }
+
+        }
+    }
 
     //This function will iterate through both list and
     //currently it takes 4.94 seconds to hit both downstreams and get data
